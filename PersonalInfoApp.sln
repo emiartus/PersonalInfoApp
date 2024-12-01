@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{47392D7D-7283-445A-8F34-9C83B6677133}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{A32BD72D-A82E-4D3C-92B9-D864CD37379B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47392D7D-7283-445A-8F34-9C83B6677133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47392D7D-7283-445A-8F34-9C83B6677133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47392D7D-7283-445A-8F34-9C83B6677133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47392D7D-7283-445A-8F34-9C83B6677133}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32BD72D-A82E-4D3C-92B9-D864CD37379B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32BD72D-A82E-4D3C-92B9-D864CD37379B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32BD72D-A82E-4D3C-92B9-D864CD37379B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32BD72D-A82E-4D3C-92B9-D864CD37379B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

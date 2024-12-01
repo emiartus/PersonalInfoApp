@@ -1,0 +1,147 @@
+﻿@page "/saveuserdata"
+@using DataLayer
+@using FrontEnd.Services
+@rendermode InteractiveServer
+@inject IPersonService PersonService
+
+<h3>Save User Data</h3>
+
+<h3>Person Form</h3>
+
+
+<EditForm Model="@PersonViewModel" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h3 class="text-center">User Data Form</h3>
+    <div class="container mt-4">
+        <form @onsubmit="HandleSubmit">
+            <!-- Name -->
+            <div class="row mb-3">
+                <label for="first-name" class="col-sm-3 col-form-label">First Name:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="first-name" class="form-control" @bind="PersonViewModel.FirstName" placeholder="Enter your name" required />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="last-name" class="col-sm-3 col-form-label">Last Name:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="last-name" class="form-control" @bind="PersonViewModel.LastName" placeholder="Enter your name" required />
+                </div>
+            </div>
+
+            <!-- personal id -->
+            <div class="row mb-3 align-items-center">
+                <label for="personal-id-number" class="col-sm-3 col-form-label">Personal ID number:</label>
+                <div class="col-sm-6">
+                    <input 
+                    type="text" 
+                    id="personal-id-number" 
+                    class="form-control" 
+                    @bind="PersonViewModel.PersonalIdNumber"
+                    placeholder="Enter your personal id number"
+                    disabled="@PersonViewModel.SkipPersonalId" 
+                    required="@(!PersonViewModel.SkipPersonalId)" />
+                </div>
+                <div class="col-sm-3 form-check">
+                    <input 
+                    type="checkbox" 
+                    id="skip-personal-id-chkbx" 
+                    class="form-check-input"
+
+                    @bind="PersonViewModel.SkipPersonalId" />
+
+                    <label for="skip-personal-id" class="form-check-label">
+                        I do not have personal id
+                    </label>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="row mb-3">
+                <label for="email" class="col-sm-3 col-form-label">Email:</label>
+                <div class="col-sm-9">
+                    <input type="email" id="email" class="form-control" @bind="PersonViewModel.Email" placeholder="Enter your email" required />
+                </div>
+            </div>
+
+            <!-- birth -->
+            <div class="row mb-3">
+                <label for="birth-date" class="col-sm-3 col-form-label">Date of Birth:</label>
+                <div class="col-sm-9">
+                    <input type="date" id="birth-date" class="form-control" @bind="PersonViewModel.DateOfBirth" placeholder="Enter your date of birth" min="1" required />
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="row mb-3">
+                <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
+                <div class="col-sm-9">
+                    <select id="gender" class="form-select" @bind="PersonViewModel.Gender">
+                        @foreach (var status in Enum.GetValues(typeof(Gender)).Cast<Gender>())
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="row mb-3">
+                <label for="country-of-origin" class="col-sm-3 col-form-label">Country of origin:</label>
+                <div class="col-sm-9">
+                    <select id="country-of-origin" class="form-select" @bind="PersonViewModel.CountryOfOrigin">
+                        @foreach (var status in Enum.GetValues(typeof(Country)).Cast<Country>())
+                        {
+                            <option value="@status">@status</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="row">
+                <div class="offset-sm-3 col-sm-9">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+
+        @if (FormSubmitted)
+        {
+            <div class="alert alert-success mt-3">
+                <strong>Success!</strong> User data submitted successfully.
+            </div>
+        }
+    </div>
+</EditForm>
+
+@code {
+    private PersonViewModel PersonViewModel = new PersonViewModel();
+    private bool FormSubmitted = false;
+
+    public async Task HandleSubmit()
+    {
+        Person person = new Person
+            {
+                FirstName = PersonViewModel.FirstName,
+                LastName = PersonViewModel.LastName,
+                CountryOfOrigin = PersonViewModel.CountryOfOrigin,
+                DateOfBirth = (DateOnly)PersonViewModel.DateOfBirth,
+                Gender = PersonViewModel.Gender,
+                Email = PersonViewModel.Email,
+                PersonalIdNumber = PersonViewModel.PersonalIdNumber
+            };
+
+        await PersonService.AddPersonAsync(person);
+
+        PersonViewModel.FirstName = string.Empty;
+        PersonViewModel.LastName = string.Empty;
+        PersonViewModel.Email = string.Empty;
+        PersonViewModel.PersonalIdNumber = string.Empty;
+        PersonViewModel.DateOfBirth = null;
+        PersonViewModel.SkipPersonalId = false;
+        FormSubmitted = true;
+    }
+}
+
+
